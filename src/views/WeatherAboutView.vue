@@ -8,22 +8,33 @@ const goHome = () => router.push('/')
   <div class="report">
     <header class="report-header">
       <p class="eyebrow">프로젝트 소개</p>
-      <h1>날씨나무 — Editorial Forest Weather</h1>
-      <p class="subtitle">Vue 3로 만든, 대기질을 나무의 생기로 표현하는 날씨 대시보드</p>
+      <h1>날씨 대시보드</h1>
+      <p class="subtitle">실시간 날씨와 대기질 정보를 한눈에 확인할 수 있는 웹 서비스</p>
     </header>
 
     <section class="report-section">
       <h2>기획 의도</h2>
       <p>
         날씨는 숫자로만 존재하지 않습니다. Apple Weather 같은 미니멀한 감성을
-        가져오되, 대기질 데이터를 단순한 수치로 보여주는 대신 "나무가 시들거나
-        무성해지는" 시각적 은유로 표현하고 싶었습니다. 그래서 도시를 나무로,
-        도시 목록을 숲으로 부르고, 즐겨찾기를 "내가 심은 나무들"이라 이름 붙였습니다.
+        가져오되, 대기질 데이터를 단순한 수치로 보여주는 대신 화면 전체의
+        명도 대비로 체감하게 하고 싶었습니다. 그래서 색을 걷어내고 흑백의
+        대비만으로 정보의 위계와 분위기를 표현하는 모던 모노크롬 대시보드로
+        설계했습니다.
       </p>
       <p>
         레이아웃은 noth.in 같은 에디토리얼 사이트의 타이포그래피 중심 구성에서
         영감을 받았습니다. 이미지와 큰 텍스트가 화면을 채우고, 기능은 절제된
         여백 속에 조용히 자리하는 방식입니다.
+      </p>
+      <p>
+        기본 요구사항 위에, 여러 도시를 나란히 담아보는 비교함과 전세계 지도를
+        얹어 데이터를 더 넓게 탐색할 수 있게 했고, 단위 전환은 세그먼트 토글로
+        다듬어 한눈에 상태를 파악하게 했습니다. 다크모드는 전역 테마 변수로
+        구현해 라이트/다크 어느 쪽에서도 같은 명도 대비 원칙이 유지되고,
+        좁은 화면에서는 상단 내비게이션이 접히고 펴지도록 해 모바일에서도
+        레이아웃이 흐트러지지 않게 했습니다. 도시 목록 페이지에는 API에 없는
+        도시도 직접 입력해 추가할 수 있는 기능을 더했고, 실습 과정 자체는
+        별도의 실습기록 페이지에 기록해두었습니다.
       </p>
     </section>
 
@@ -37,7 +48,7 @@ const goHome = () => router.push('/')
           </tr>
           <tr>
             <th>Vue Router</th>
-            <td>감성 메인과 기능 페이지(숲, 즐겨찾기, 상세)를 독립된 화면으로 분리하기 위해</td>
+            <td>감성 메인과 기능 페이지(도시 목록, 즐겨찾기, 상세)를 독립된 화면으로 분리하기 위해</td>
           </tr>
           <tr>
             <th>Pinia</th>
@@ -53,7 +64,7 @@ const goHome = () => router.push('/')
           </tr>
           <tr>
             <th>Element Plus</th>
-            <td>온도 뱃지 같은 반복 UI를 빠르게 구성하기 위해</td>
+            <td>el-tag, el-dialog, el-button 적용</td>
           </tr>
         </tbody>
       </table>
@@ -63,7 +74,7 @@ const goHome = () => router.push('/')
       <h2>트러블슈팅 로그</h2>
 
       <div class="trouble-card">
-        <h3>1. 데이터와 함수를 착각한 순간</h3>
+        <h3>1. 데이터와 함수를 착각</h3>
         <div class="trouble-row">
           <span class="trouble-label label-problem">Problem</span>
           <p><code>@click="configStore"</code> 클릭 시 "configStore is not a function" 에러</p>
@@ -83,7 +94,7 @@ const goHome = () => router.push('/')
       </div>
 
       <div class="trouble-card">
-        <h3>2. 침묵하는 오타</h3>
+        <h3>2. 오타</h3>
         <div class="trouble-row">
           <span class="trouble-label label-problem">Problem</span>
           <p><code>class="nav=links"</code> — 콘솔 에러 없이 스타일만 조용히 안 먹음</p>
@@ -123,7 +134,7 @@ const goHome = () => router.push('/')
       </div>
 
       <div class="trouble-card">
-        <h3>4. 범인은 내가 만들지도 않은 코드였다</h3>
+        <h3>4. 기본 스타일 코드에 대한 이해 부족</h3>
         <div class="trouble-row">
           <span class="trouble-label label-problem">Problem</span>
           <p>카드 개수가 바뀔 때마다 전체 레이아웃 폭이 줄었다 늘었다 함</p>
@@ -167,7 +178,7 @@ const goHome = () => router.push('/')
       <h2>회고</h2>
       <p>
         이번 프로젝트에서 가장 많이 마주친 버그는 복잡한 로직 오류가 아니라,
-        한 글자 오타였다. -와 =, Tag와 Tah처럼 사소해 보이는 차이가 기능 전체를
+        사소한 오타였다. -와 =, Tag와 Tah처럼 사소해 보이는 차이가 기능 전체를
         조용히 무력화시켰다. 이 경험을 통해 콘솔에 에러가 없다고 안심하지 않고,
         실제 렌더링 결과를 항상 눈으로 확인하는 습관을 갖게 됐다.
       </p>
@@ -194,7 +205,7 @@ const goHome = () => router.push('/')
   font-size: 13px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--forest-sage);
+  color: var(--text-muted);
   margin: 0 0 16px;
 }
 .report-header h1 {
@@ -221,7 +232,7 @@ const goHome = () => router.push('/')
   color: var(--text-body);
   margin: 0 0 20px;
   padding-bottom: 12px;
-  border-bottom: 1px solid var(--forest-mist);
+  border-bottom: 1px solid var(--border-glass);
 }
 .report-section p {
   font-size: 14px;
@@ -241,7 +252,7 @@ const goHome = () => router.push('/')
 .stack-table td {
   text-align: left;
   padding: 12px 0;
-  border-bottom: 1px solid var(--forest-mist);
+  border-bottom: 1px solid var(--border-glass);
   font-size: 13px;
   vertical-align: top;
 }
@@ -292,7 +303,7 @@ const goHome = () => router.push('/')
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: var(--forest-sage);
+  color: var(--text-muted);
   padding-top: 1px;
 }
 .label-problem {
@@ -309,8 +320,8 @@ const goHome = () => router.push('/')
 }
 .trouble-row code {
   font-size: 12px;
-  background: var(--forest-mist);
-  color: var(--forest-dark);
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--accent-block);
   padding: 1px 5px;
   border-radius: 4px;
 }

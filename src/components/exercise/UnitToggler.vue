@@ -2,28 +2,56 @@
 import { useConfigStore } from '../../stores/configStore.js'
 
 const configStore = useConfigStore()
+
+const selectUnit = (target) => {
+  if (configStore.unit !== target) configStore.toggleUnit()
+}
 </script>
 
 <template>
-    <button class="nav-toggle-btn" @click="configStore.toggleUnit">
-        {{ configStore.unit === 'fahrenheit' ? '화씨 · °F' : '섭씨 · °C' }}
-    </button>
+  <div class="segmented">
+    <button
+      type="button"
+      class="segment"
+      :class="{ active: configStore.unit === 'celsius' }"
+      @click="selectUnit('celsius')"
+    >°C</button>
+    <button
+      type="button"
+      class="segment"
+      :class="{ active: configStore.unit === 'fahrenheit' }"
+      @click="selectUnit('fahrenheit')"
+    >°F</button>
+  </div>
 </template>
 
 <style scoped>
-.nav-toggle-btn {
-  background: none;
-  border: none;
-  padding: 0;
-  color: var(--nav-muted);
-  font-size: 14px;
-  font-weight: 500;
-  letter-spacing: 0.03em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: color 0.2s ease;
+.segmented {
+  display: inline-flex;
+  background: var(--bg-muted);
+  border: 1px solid var(--border-soft);
+  border-radius: 999px;
+  padding: 2px;
+  gap: 2px;
+  margin-top: 4px;
 }
-.nav-toggle-btn:hover {
-  color: var(--nav-active);
+.segment {
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.segment.active {
+  background: var(--accent-block);
+  color: var(--accent-block-text);
+}
+.segment:hover:not(.active) {
+  color: var(--text-body);
 }
 </style>

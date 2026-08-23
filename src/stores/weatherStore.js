@@ -21,6 +21,21 @@ export const useWeatherStore = defineStore('weather', () => {
     return cityList.value.find((city) => city.id === id) || null
   }
 
+  // action: 사용자가 직접 입력한 커스텀 도시를 창고에 추가
+  const addCustomCity = (cityData) => {
+    cityList.value.push({
+      id: `custom_${Date.now()}`,
+      name: cityData.name,
+      temp: cityData.temp,
+      status: cityData.status,
+      humidity: cityData.humidity ?? 50,
+      wind: cityData.wind ?? 0,
+      aqi: 1,
+      lat: null,
+      lon: null,
+    })
+  }
+
   // action: cityCatalog 기준으로 실시간 날씨를 병렬 요청해서 창고에 저장 (실패 시 mock으로 폴백)
   const fetchAllCities = async () => {
     if (hasFetched.value) return
@@ -44,5 +59,5 @@ export const useWeatherStore = defineStore('weather', () => {
     }
   }
 
-  return { cityList, isLoading, loadError, setCityList, findCityById, fetchAllCities }
+  return { cityList, isLoading, loadError, setCityList, findCityById, fetchAllCities, addCustomCity }
 })

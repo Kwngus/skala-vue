@@ -90,6 +90,10 @@ const aqiTagType = computed(() => {
 .weather-card:hover {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
+.card-info h4,
+.card-info p {
+  color: var(--text-body);
+}
 .fav-btn {
   flex-shrink: 0;
   border: none;
@@ -108,6 +112,7 @@ const aqiTagType = computed(() => {
   border: 1px solid #d1d5db;
   border-radius: 6px;
   background: var(--bg-panel);
+  color: var(--text-body);
   cursor: pointer;
 }
 .detail-btn:hover {

@@ -19,6 +19,21 @@ const { target: listSection, isVisible: listVisible } = useScrollReveal()
 const searchQuery = ref('') // searchQuery = 사용자가 검색창에 입력한 값.(처음에는 빈 문자열)
 const selectedCityInfo = ref(null) // 어떤카드를 클릭했는지 기억하는 변수(처음에는 아무것도 선택안되어서 null)
 
+// 커스텀 도시 추가
+const showAddForm = ref(false)
+const newCity = ref({ name: '', temp: null, status: '맑음', humidity: null, wind: null })
+const statusOptions = ['맑음', '흐림', '비', '구름', '눈']
+
+const submitNewCity = () => {
+  if (!newCity.value.name || newCity.value.temp === null || newCity.value.temp === '') {
+    window.alert('도시 이름과 온도는 필수입니다')
+    return
+  }
+  weatherStore.addCustomCity(newCity.value)
+  newCity.value = { name: '', temp: null, status: '맑음', humidity: null, wind: null }
+  showAddForm.value = false
+}
+
 // 4. 검색 히스토리
 const searchHistory = ref(JSON.parse(localStorage.getItem('searchHistory') || '[]'))
 
@@ -127,6 +142,20 @@ const showDetail = (city) => {
             >
               {{ term }}
             </button>
+          </div>
+
+          <button class="add-toggle-btn" @click="showAddForm = !showAddForm">
+            {{ showAddForm ? '− 도시 추가 닫기' : '+ 도시 추가' }}
+          </button>
+          <div v-if="showAddForm" class="add-form">
+            <input type="text" v-model.trim="newCity.name" placeholder="도시 이름" />
+            <input type="number" v-model.number="newCity.temp" placeholder="온도(°C)" />
+            <select v-model="newCity.status">
+              <option v-for="opt in statusOptions" :key="opt" :value="opt">{{ opt }}</option>
+            </select>
+            <input type="number" v-model.number="newCity.humidity" placeholder="습도(%)" />
+            <input type="number" v-model.number="newCity.wind" placeholder="풍속(m/s)" />
+            <button class="add-submit-btn" @click="submitNewCity">추가하기</button>
           </div>
         </template>
 
@@ -251,7 +280,7 @@ const showDetail = (city) => {
 .history-chip {
   font-size: 12px;
   padding: 4px 10px;
-  border: 1px solid var(--forest-mist, #b8c9b3);
+  border: 1px solid var(--border-glass);
   border-radius: 999px;
   background: var(--bg-panel);
   color: var(--text-body);
@@ -259,5 +288,45 @@ const showDetail = (city) => {
 }
 .history-chip:hover {
   background: var(--bg-muted);
+}
+
+.add-toggle-btn {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-glass);
+  color: var(--text-body);
+  border-radius: 999px;
+  padding: 6px 16px;
+  font-size: 13px;
+  cursor: pointer;
+  margin: 12px 0;
+}
+.add-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  background: var(--bg-panel);
+  border: 1px solid var(--border-glass);
+  border-radius: 16px;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+.add-form input,
+.add-form select {
+  flex: 1 1 120px;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid var(--border-soft);
+  background: var(--bg-muted);
+  color: var(--text-body);
+}
+.add-submit-btn {
+  flex: 1 1 100%;
+  padding: 8px;
+  border: none;
+  border-radius: 6px;
+  background: var(--accent-block);
+  color: var(--accent-block-text);
+  cursor: pointer;
+  font-weight: 600;
 }
 </style>
