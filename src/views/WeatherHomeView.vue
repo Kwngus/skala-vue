@@ -1,16 +1,21 @@
 
 <script setup>
 import { computed, onMounted, ref, watch } from 'vue'
+import { useRouter } from 'vue-router'
 import HeroSection from '../components/exercise/HeroSection.vue'
 import AirEffectLayer from '../components/exercise/AirEffectLayer.vue'
 import FloatingSearch from '../components/exercise/FloatingSearch.vue'
+import WeatherCard from '../components/exercise/WeatherCard.vue'
 import { useScrollReveal } from '../composables/useScrollReveal.js'
 import { useConfigStore } from '../stores/configStore.js'
 import { useWeatherStore } from '../stores/weatherStore.js'
+import { useFavoriteStore } from '../stores/favoriteStore.js'
 import { fetchAirPollution, fetchWeatherByCoords, mapToCityItem } from '../api/weatherApi.js'
 
+const router = useRouter()
 const configStore = useConfigStore()
 const weatherStore = useWeatherStore()
+const favoriteStore = useFavoriteStore()
 const { target: manifestoSection, isVisible: manifestoVisible } = useScrollReveal()
 
 const geoCity = ref(null)
@@ -75,6 +80,16 @@ const heroTemp = computed(() => {
     }
     return rawTemp
 })
+
+const previewFavorites = computed(() =>
+  weatherStore.cityList
+    .filter((city) => favoriteStore.favoriteIds.includes(city.id))
+    .slice(0, 3),
+)
+
+const goToDetail = (city) => {
+  router.push('/weather/' + city.id)
+}
 </script>
 
 <template>
@@ -91,7 +106,21 @@ const heroTemp = computed(() => {
     />
 
     <section ref="manifestoSection" class="manifesto fade-section" :class="{ visible: manifestoVisible }">
-      <p class="manifesto-text">우리는 매일 같은 하늘 아래 있지만, 각자 다른 날씨를 살아갑니다.</p>
+      <p class="manifesto-text">각 도시의 오늘의 날씨를 알아보세요.</p>
+
+      <div v-if="previewFavorites.length > 0" class="favorite-preview">
+        <p class="section-eyebrow">즐겨찾는 도시</p>
+        <div class="favorite-preview-list">
+          <WeatherCard
+            v-for="city in previewFavorites"
+            :key="city.id"
+            :city="city"
+            @select-card="goToDetail"
+            @click-detail="goToDetail"
+          />
+        </div>
+      </div>
+
       <RouterLink to="/forest" class="forest-cta">전체 도시 보러가기</RouterLink>
     </section>
   </div>
@@ -119,26 +148,46 @@ const heroTemp = computed(() => {
   text-align: center;
   max-width: 480px;
   margin: 80px auto;
-  margin-top: 30vh;
+  margin-top: 60px;
 }
 .manifesto-text {
   font-weight: 300;
   font-size: 20px;
   line-height: 1.6;
-  color: var(--forest-dark);
+  color: var(--text-body);
   margin: 0 0 32px;
+}
+
+.favorite-preview {
+  margin: 0 0 32px;
+  text-align: left;
+}
+.favorite-preview .section-eyebrow {
+  font-size: 13px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin: 0 0 12px;
+  text-align: center;
+}
+.favorite-preview-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 .forest-cta {
   display: inline-block;
   padding: 12px 32px;
   border-radius: 999px;
-  background: var(--forest-dark);
-  color: var(--forest-cream);
+  background: var(--accent-block);
+  color: var(--accent-block-text);
   text-decoration: none;
   font-size: 14px;
   font-weight: 500;
+  box-shadow: var(--glow-cyan);
 }
 .forest-cta:hover {
-  background: #14211a;
+  background: var(--accent-block);
+  opacity: 0.85;
 }
 </style>
