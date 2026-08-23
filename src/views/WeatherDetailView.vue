@@ -174,12 +174,12 @@ const goHome = () => {
       </div>
     </div>
 
-    <button @click="goHome">← 메인 대시보드로 돌아가기</button>
+    <el-button type="primary" class="home-btn" @click="goHome">← 메인 대시보드로 돌아가기</el-button>
   </div>
 
   <div v-else class="detail-section">
     <p>{{ loadError ? '데이터 통신에 실패했습니다.' : '해당 도시 정보를 찾을 수 없습니다.' }}</p>
-    <button @click="goHome">← 메인 대시보드로 돌아가기</button>
+    <el-button type="primary" class="home-btn" @click="goHome">← 메인 대시보드로 돌아가기</el-button>
   </div>
 </template>
 
@@ -204,16 +204,19 @@ const goHome = () => {
   font-size: 14px;
   color: var(--text-body);
 }
-.detail-section button {
+.home-btn {
   margin-top: 16px;
-  padding: 8px 14px;
-  border: 1px solid #d1d5db;
-  border-radius: 6px;
-  background: var(--bg-panel);
-  cursor: pointer;
+  --el-button-bg-color: var(--accent-block);
+  --el-button-border-color: var(--accent-block);
+  --el-button-text-color: var(--accent-block-text);
+  --el-button-hover-bg-color: var(--accent-block);
+  --el-button-hover-border-color: var(--accent-block);
+  --el-button-hover-text-color: var(--accent-block-text);
+  --el-button-active-bg-color: var(--accent-block);
+  --el-button-active-border-color: var(--accent-block);
 }
-.detail-section button:hover {
-  background: var(--bg-muted);
+.home-btn:hover {
+  box-shadow: var(--glow-cyan);
 }
 .extra-info { margin-top: 8px; padding: 10px; background: var(--bg-muted); border-radius: 8px; }
 .sub-text { font-size: 12px; color: var(--text-muted); margin: 4px 0 0; }
@@ -222,7 +225,7 @@ const goHome = () => {
 .forecast-title {
   font-weight: 600;
   margin: 0 0 8px;
-  color: var(--forest-dark, #1b2b22);
+  color: var(--text-body);
 }
 .forecast-row {
   display: flex;
@@ -237,19 +240,19 @@ const goHome = () => {
   gap: 4px;
   padding: 10px 4px;
   background: var(--accent-block);
-  border: 1px solid var(--forest-mist, #b8c9b3);
+  border: 1px solid var(--border-glass);
   border-radius: 8px;
   text-align: center;
 }
 .forecast-day-label {
   font-size: 12px;
   font-weight: 600;
-  color: var(--forest-dark, #1b2b22);
+  color: var(--accent-block-text);
 }
 .forecast-day-temp {
   font-size: 15px;
   font-weight: 700;
-  color: var(--forest-dark, #1b2b22);
+  color: var(--accent-block-text);
 }
 .forecast-day-status {
   font-size: 11px;
