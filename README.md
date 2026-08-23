@@ -138,3 +138,5 @@ center }`. 직접 작성한 코드가 아니라 처음부터 있던 코드였음
 
 ## 배포 URL
 
+https://skala-vue-kwngus-ifstrbkjl-kwngus-projects.vercel.app/
+
