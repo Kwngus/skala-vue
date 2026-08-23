@@ -13,7 +13,7 @@ onMounted(() => {
 
 <template>
   <div class="explore-page">
-    <div class="explore-title">🌍 전세계 숲과 도시</div>
+    <div class="explore-title">🌍 전세계 도시</div>
 
     <div v-if="exploreStore.isLoading" class="loading-overlay">🌍 전세계 날씨를 불러오는 중...</div>
     <p v-if="exploreStore.loadError" class="error-overlay">⚠️ 일부 도시 정보를 불러오지 못했습니다.</p>
@@ -48,7 +48,7 @@ onMounted(() => {
   background: rgba(27, 43, 34, 0.55);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  color: var(--forest-cream);
+  color: var(--text-body);
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
   padding: 10px 18px;
   border-radius: 999px;
@@ -63,10 +63,10 @@ onMounted(() => {
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
-  background: rgba(27, 43, 34, 0.55);
+  background: rgba(0, 0, 0, 0.55);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  color: #f5f1e8;
+  color: var(--text-body);
   padding: 8px 16px;
   border-radius: 999px;
   font-size: 12px;

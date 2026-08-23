@@ -16,14 +16,20 @@
   --forest-cream: #f5f1e8;
   --forest-mist: #b8c9b3;
 
-  --bg-page: var(--forest-cream);
-  --bg-panel: #fdfcf8;
-  --text-body: #1b2b22;
-  --border-soft: #e5e1d5;
-  --text-muted: #9ca3af;
-  --bg-muted: #f9fafb;
-  --accent-block: var(--forest-dark);
-  --accent-block-text: var(--forest-cream);
+  /* 모던 흑백 톤 팔레트 — 라이트 */
+  --bg-page: #ffffff;
+  --bg-panel: #f4f4f5;
+  --text-body: #0a0a0a;
+  --border-soft: #e2e2e2;
+  --text-muted: #6b6b6b;
+  --bg-muted: #ececec;
+  --accent-block: #0a0a0a;
+  --accent-block-text: #ffffff;
+
+  --border-glass: #dddddd;
+  --glass-blur: blur(10px) saturate(100%);
+  --glow-cyan: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --glow-magenta: 0 12px 32px rgba(0, 0, 0, 0.14);
 
   --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
   --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
@@ -65,13 +71,18 @@
 }
 
 [data-theme='dark'] {
-  --bg-page: #0f1a13;
-  --bg-panel: #16241a;
-  --text-body: #e8ede6;
-  --border-soft: #24352a;
-  --text-muted: #7a8a7d;
-  --bg-muted: #1c2a20;
-  --accent-block: #2d4a35;
+  /* 모던 흑백 톤 팔레트 — 다크 */
+  --bg-page: #0a0a0a;
+  --bg-panel: #161616;
+  --text-body: #f5f5f5;
+  --border-soft: #262626;
+  --text-muted: #9a9a9a;
+  --bg-muted: #1f1f1f;
+  --accent-block: #ffffff;
+  --accent-block-text: #0a0a0a;
+  --border-glass: #2e2e2e;
+  --glow-cyan: 0 8px 24px rgba(0, 0, 0, 0.5);
+  --glow-magenta: 0 12px 32px rgba(0, 0, 0, 0.7);
 }
 
 /* src/style.css 또는 src/assets/main.css */
@@ -324,4 +335,36 @@ code {
     right: 0;
     border-right-color: var(--border);
   }
+}
+
+/*
+ * 글래스 패널 일괄 적용
+ * background: var(--bg-panel) / background-color: var(--bg-panel)을 쓰는
+ * 모든 선택자에 글래스모피즘 질감을 부여한다. 대상 셀렉터 중 다수가
+ * 각 컴포넌트의 scoped 스타일에서 자체 border/box-shadow를 이미 갖고 있어
+ * (예: .panel, .map-section, .stats-section의 border: none, .detail-section/
+ * .notfound-section의 border: 1px solid #e5e7eb 등) scoped 속성 선택자가
+ * 이 전역 클래스 선택자보다 우선순위가 높다. 컴포넌트 파일을 건드리지 않고
+ * 전역에서 일괄 강제 적용하기 위해 !important를 사용했다.
+ */
+.empty-overlay,
+.city-tooltip,
+.city-popup-wrap .leaflet-popup-content-wrapper,
+.city-popup-wrap .leaflet-popup-tip,
+.panel,
+.compare-card,
+.detail-btn,
+.notfound-section,
+.trouble-card,
+.detail-section,
+.favorites-section,
+.map-section,
+.stats-section,
+.history-chip {
+  backdrop-filter: var(--glass-blur) !important;
+  -webkit-backdrop-filter: var(--glass-blur) !important;
+  border: 1px solid var(--border-glass) !important;
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
 }

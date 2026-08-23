@@ -71,19 +71,20 @@ const handleSearch = () => {
   width: min(90vw, 420px);
   padding: 14px 20px;
   border-radius: 999px;
-  background: rgba(245, 241, 232, 0.9);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  border: none;
+  background: var(--bg-panel);
+  backdrop-filter: var(--glass-blur);
+  -webkit-backdrop-filter: var(--glass-blur);
+  border: 1px solid var(--border-glass);
   font-size: 15px;
   text-align: center;
-  color: var(--forest-dark, #1b2b22);
+  color: var(--text-body);
+  box-shadow: var(--glow-cyan);
 }
 .floating-search input:focus {
   outline: none;
 }
 .floating-search input::placeholder {
-  color: var(--forest-dark, #1b2b22);
-  opacity: 0.5;
+  color: var(--text-muted);
+  opacity: 1;
 }
 </style>

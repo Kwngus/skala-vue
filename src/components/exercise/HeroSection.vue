@@ -1,6 +1,5 @@
 <script setup>
 import { computed } from 'vue'
-import heroForest from '../../assets/hero-forest.jpg'
 
 const props = defineProps({
   cityName: { type: String, default: '서울' },
@@ -12,13 +11,13 @@ const props = defineProps({
 const poeticLine = computed(() => {
   switch (props.status) {
     case '맑음':
-      return '오늘, 숲은 맑게 숨쉽니다'
+      return '오늘, 하늘이 맑습니다'
     case '비':
-      return '빗소리가 나뭇잎을 두드립니다'
+      return '빗소리가 도시를 두드립니다'
     case '눈':
-      return '숲 전체가 고요히 덮였습니다'
+      return '거리가 고요히 덮였습니다'
     case '구름':
-      return '옅은 구름이 숲을 지나갑니다'
+      return '옅은 구름이 흐릅니다'
     default:
       return `${props.cityName}의 오늘`
   }
@@ -26,7 +25,7 @@ const poeticLine = computed(() => {
 </script>
 
 <template>
-  <section class="hero-forest" :style="{ backgroundImage: `url(${heroForest})` }">
+  <section class="hero-forest">
     <div class="hero-forest__overlay"></div>
 
     <div class="hero-forest__content">
@@ -49,9 +48,10 @@ const poeticLine = computed(() => {
   margin-left: calc(50% - 50vw);
   height: 100vh;
   min-height: 640px;
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed;
+  background:
+    radial-gradient(circle at 25% 20%, var(--border-glass), transparent 45%),
+    radial-gradient(circle at 75% 80%, var(--border-glass), transparent 50%),
+    var(--bg-page);
   display: flex;
   align-items: flex-end;
   overflow: hidden;
@@ -64,14 +64,17 @@ const poeticLine = computed(() => {
 .hero-forest__overlay {
   position: absolute;
   inset: 0;
-  background: linear-gradient(0deg, rgba(27, 43, 34, 0.92) 0%, rgba(27, 43, 34, 0.15) 55%, rgba(27, 43, 34, 0) 100%);
+  background: none;
+}
+:global([data-theme='dark']) .hero-forest__overlay {
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.15) 55%, transparent 100%);
 }
 
 .hero-forest__content {
   position: relative;
   z-index: 1;
   padding: 0 0 64px 48px;
-  color: var(--forest-cream, #f5f1e8);
+  color: var(--text-body);
 }
 
 .hero-forest__label {
@@ -80,7 +83,7 @@ const poeticLine = computed(() => {
   font-size: 14px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--forest-mist, #b8c9b3);
+  color: var(--text-muted);
   margin-bottom: 16px;
 }
 
@@ -113,7 +116,7 @@ const poeticLine = computed(() => {
   font-weight: 300;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--forest-mist, #b8c9b3);
+  color: var(--text-muted);
   animation: hero-forest-scroll-blink 2.4s ease-in-out infinite;
 }
 

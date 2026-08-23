@@ -36,11 +36,9 @@ const renderMarkers = () => {
     const category = getTempCategory(city.temp)
     const icon = L.divIcon({
       className: 'leaf-marker-icon',
-      html: `<div class="marker-shell marker-${category}">
-               <span class="marker-content">🍃 ${city.temp}°</span>
-             </div>`,
-      iconSize: [34, 34],
-      iconAnchor: [17, 34],
+      html: `<div class="marker-pin marker-${category}">${city.temp}°</div>`,
+      iconSize: [36, 36],
+      iconAnchor: [18, 18],
     })
 
     const marker = L.marker([city.lat, city.lon], { icon }).addTo(mapInstance)
@@ -49,7 +47,7 @@ const renderMarkers = () => {
       `<h4>${city.name}</h4><p>${city.status} · ${city.temp}°</p><p>대기질: ${getAqiLabel(city.aqi)}</p>`,
       {
         direction: 'top',
-        offset: [0, -30],
+        offset: [0, -22],
         className: 'city-tooltip',
         sticky: true,
       },
@@ -143,7 +141,7 @@ onUnmounted(() => {
   overflow: hidden;
 }
 .city-map.dark-forest :deep(.leaflet-tile-pane) {
-  filter: sepia(0.35) hue-rotate(90deg) saturate(2) brightness(0.72);
+  filter: brightness(0.7) contrast(1.05);
 }
 .map-vignette {
   position: absolute;
@@ -151,8 +149,8 @@ onUnmounted(() => {
   pointer-events: none;
   z-index: 1000;
   background: radial-gradient(ellipse at center,
-    rgba(59, 91, 66, 0.05) 0%,
-    rgba(11, 20, 14, 0.55) 100%);
+    rgba(255, 255, 255, 0.04) 0%,
+    rgba(0, 0, 0, 0.6) 100%);
 }
 .empty-overlay {
   position: absolute;
@@ -170,35 +168,22 @@ onUnmounted(() => {
 </style>
 
 <style>
-.marker-shell {
-  width: 34px;
-  height: 34px;
-  border-radius: 0 50% 50% 50%;
-  transform: rotate(45deg);
+.marker-pin {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid rgba(245, 241, 232, 0.85);
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-  cursor: pointer;
-}
-.marker-content {
-  display: block;
-  transform: rotate(-45deg);
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 700;
-  color: #fff;
-  white-space: nowrap;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.9);
 }
-.marker-hot {
-  background: #b5473f;
-}
-.marker-mild {
-  background: #4a5a72;
-}
-.marker-cold {
-  background: #6b6f70;
-}
+.marker-hot { background: #1a1a1a; color: #ffffff; }
+.marker-mild { background: #8a8a8a; color: #ffffff; }
+.marker-cold { background: #ffffff; color: #1a1a1a; border-color: rgba(0,0,0,0.15); }
 .city-tooltip {
   background: var(--bg-panel);
   padding: 10px 14px;
@@ -242,8 +227,8 @@ onUnmounted(() => {
   padding: 6px 8px;
   border: 1px solid #d1d5db;
   border-radius: 6px;
-  background: #fff;
-  color: #1b2b22;
+  background: var(--accent-block-text);
+  color: var(--accent-block);
   font-size: 11px;
   cursor: pointer;
   white-space: nowrap;

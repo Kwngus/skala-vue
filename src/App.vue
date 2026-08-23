@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 import UnitToggler from './components/exercise/UnitToggler.vue';
 import WindUnitToggler from './components/exercise/WindUnitToggler.vue';
@@ -7,20 +7,27 @@ import ThemeToggler from './components/exercise/ThemeToggler.vue';
 
 const route = useRoute()
 const isHomePage = computed(() => route.path === '/' || route.path === '/explore')
+const isNavOpen = ref(false)
 </script>
 
 <template>
   <nav class="navbar" :class="{ 'on-hero': isHomePage }">
-    <div class="nav-links">
-    <RouterLink to ="/">날씨 대시보드</RouterLink>
-    <RouterLink to ="/forest">숲</RouterLink>
-    <RouterLink to ="/favorites">즐겨찾기</RouterLink>
-    <RouterLink to ="/explore">탐험</RouterLink>
-    <RouterLink to ="/about">서비스 소개</RouterLink>
+    <button class="nav-toggle" @click="isNavOpen = !isNavOpen">
+      {{ isNavOpen ? '✕' : '☰' }}
+    </button>
+    <div class="nav-body" :class="{ open: isNavOpen }">
+      <div class="nav-links">
+      <RouterLink to ="/">날씨 대시보드</RouterLink>
+      <RouterLink to ="/forest">국내 도시</RouterLink>
+      <RouterLink to ="/favorites">즐겨찾기</RouterLink>
+      <RouterLink to ="/explore">전세계</RouterLink>
+      <RouterLink to ="/about">서비스 소개</RouterLink>
+      <RouterLink to ="/showcase">실습기록</RouterLink>
+      </div>
+      <UnitToggler />
+      <WindUnitToggler />
+      <ThemeToggler />
     </div>
-    <UnitToggler />
-    <WindUnitToggler />
-    <ThemeToggler />
   </nav>
   <main>
     <RouterView />
@@ -29,8 +36,8 @@ const isHomePage = computed(() => route.path === '/' || route.path === '/explore
 
 <style scoped>
 .navbar {
-  --nav-muted: #b3b3b0;
-  --nav-active: #1a1a1a;
+  --nav-muted: var(--text-muted);
+  --nav-active: var(--text-body);
 
   position: fixed;
   top: 32px;
@@ -43,8 +50,34 @@ const isHomePage = computed(() => route.path === '/' || route.path === '/explore
   padding: 8px;
 }
 .navbar.on-hero {
-  --nav-muted: rgba(245, 241, 232, 0.55);
-  --nav-active: #f5f1e8;
+  --nav-muted: var(--text-muted);
+  --nav-active: var(--text-body);
+}
+.nav-toggle {
+  background: var(--bg-panel);
+  border: 1px solid var(--border-glass);
+  color: var(--text-body);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 8px;
+  align-self: flex-end;
+}
+.nav-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 14px;
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.3s ease, opacity 0.3s ease;
+}
+.nav-body.open {
+  max-height: 400px;
+  opacity: 1;
 }
 .nav-links {
   display: flex;

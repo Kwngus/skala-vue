@@ -24,11 +24,11 @@ const goToDetail = (city) => {
 
 <template>
   <div class="favorites-section">
-    <h2>⭐ 내가 심은 나무들</h2>
+    <h2>⭐ 즐겨찾는 도시</h2>
 
     <template v-if="favoritedCities.length === 0">
-      <p class="empty-text">아직 즐겨찾기한 도시가 없습니다. 숲에서 도시를 즐겨찾기 해보세요.</p>
-      <RouterLink to="/forest" class="forest-link-btn">숲으로 가기</RouterLink>
+      <p class="empty-text">아직 즐겨찾기한 도시가 없습니다. 도시 목록에서 즐겨찾기 해보세요.</p>
+      <RouterLink to="/forest" class="forest-link-btn">도시 목록으로</RouterLink>
     </template>
 
     <div v-else class="favorite-list">
@@ -50,7 +50,7 @@ const goToDetail = (city) => {
   padding: 40px 20px;
   text-align: center;
   background: var(--bg-panel);
-  border: 1px solid var(--forest-mist);
+  border: 1px solid var(--border-glass);
   border-radius: 16px;
 }
 .empty-text {
