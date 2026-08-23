@@ -32,6 +32,11 @@ const routes = [
     component: () => import('../views/ExploreView.vue'),
   },
   {
+    path: '/showcase',
+    name: 'showcase',
+    component: () => import('../views/ShowcaseView.vue'),
+  },
+  {
     path: '/:pathMatch(.*)*', // Catch-all, 반드시 맨 마지막
     name: 'not-found',
     component: () => import('../views/NotFoundView.vue'),
